@@ -2,10 +2,24 @@ package com.expense.tracker.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Purple80 = Color(0xFFD0BCFF)
-val PurpleGrey80 = Color(0xFFCCC2DC)
-val Pink80 = Color(0xFFEFB8C8)
+val VolakoGreen = Color(0xFF00B894)
+val VolakoGreenDark = Color(0xFF00A381)
+val VolakoGreenLight = Color(0xFF55EFC4)
 
-val Purple40 = Color(0xFF6650a4)
-val PurpleGrey40 = Color(0xFF625b71)
-val Pink40 = Color(0xFF7D5260)
+val VolakoPurple = Color(0xFF6C5CE7)
+val VolakoRed = Color(0xFFE17055)
+val VolakoAmber = Color(0xFFFDCB6E)
+
+val VolakoDarkSurface = Color(0xFF0D1117)
+val VolakoDarkCard = Color(0xFF161B22)
+val VolakoDarkElevated = Color(0xFF21262D)
+
+val VolakoLightBackground = Color(0xFFF6F8FA)
+val VolakoLightSurface = Color.White
+val VolakoLightSurfaceVariant = Color(0xFFF0F2F5)
+
+val VolakoTextPrimaryDark = Color(0xFFE6EDF3)
+val VolakoTextSecondaryDark = Color(0xFF8B949E)
+
+val VolakoTextPrimaryLight = Color(0xFF1C1C1E)
+val VolakoTextSecondaryLight = Color(0xFF636366)
