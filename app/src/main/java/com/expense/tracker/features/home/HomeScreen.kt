@@ -5,10 +5,13 @@ import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -29,6 +32,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.expense.tracker.ui.components.ExpenseCard
+import com.expense.tracker.ui.components.SectionHeader
 import com.expense.tracker.ui.components.SummaryCard
 import java.time.YearMonth
 
@@ -42,6 +47,7 @@ fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel<HomeViewModel>(),
 ) {
     val summary by viewModel.monthlySummary.collectAsStateWithLifecycle()
+    val expenses by viewModel.recentExpenses.collectAsStateWithLifecycle()
 
     var currentMonth by remember { mutableStateOf(YearMonth.now()) }
 
@@ -111,6 +117,25 @@ fun HomeScreen(
                         )
                     }
                 }
+                item {
+                    SectionHeader(title = "Recent Transactions")
+                }
+                if (expenses.isEmpty()) {
+                    item {
+                        EmptyState()
+                    }
+                } else {
+                    items(
+                        items = expenses,
+                        key = { it.id },
+                    ) { expense ->
+                        ExpenseCard(
+                            expense = expense,
+                            onClick = { onNavigateToExpenseDetail(expense.id) },
+                        )
+                    }
+                }
+                item { Spacer(modifier = Modifier.height(80.dp)) }
             }
         }
     }

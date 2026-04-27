@@ -4,7 +4,9 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.expense.tracker.core.domain.model.Expense
 import com.expense.tracker.core.domain.model.MonthlySummary
+import com.expense.tracker.core.domain.usecase.GetExpensesByDateRangeUseCase
 import com.expense.tracker.core.domain.usecase.GetMonthlySummaryUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,6 +23,7 @@ class HomeViewModel
     @Inject
     constructor(
         private val getMonthlySummaryUseCase: GetMonthlySummaryUseCase,
+        private val getExpensesByDateRangeUseCase: GetExpensesByDateRangeUseCase,
     ) : ViewModel() {
         private val _uiState = MutableStateFlow(HomeUiState())
         val uiState: StateFlow<HomeUiState> = _uiState.asStateFlow()
@@ -38,6 +41,32 @@ class HomeViewModel
                 started = SharingStarted.WhileSubscribed(5_000),
                 initialValue = null,
             )
+
+        @RequiresApi(Build.VERSION_CODES.O)
+        val recentExpenses: StateFlow<List<Expense>> =
+            run {
+                val now = YearMonth.now()
+                val startDate =
+                    now
+                        .atDay(1)
+                        .atStartOfDay()
+                        .atZone(java.time.ZoneId.systemDefault())
+                        .toInstant()
+                        .toEpochMilli()
+                val endDate =
+                    now
+                        .atEndOfMonth()
+                        .atTime(23, 59, 59)
+                        .atZone(java.time.ZoneId.systemDefault())
+                        .toInstant()
+                        .toEpochMilli()
+
+                getExpensesByDateRangeUseCase(startDate, endDate).stateIn(
+                    scope = viewModelScope,
+                    started = SharingStarted.WhileSubscribed(5_000),
+                    initialValue = emptyList(),
+                )
+            }
 
         @RequiresApi(Build.VERSION_CODES.O)
         fun onEvent(event: HomeEvent) {
