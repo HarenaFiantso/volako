@@ -17,6 +17,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -51,7 +52,12 @@ fun CategoryIconBadge(
                 .background(color.copy(alpha = 0.2f)),
         contentAlignment = Alignment.Center,
     ) {
-        Text(text = icon, style = MaterialTheme.typography.titleMedium)
+        Icon(
+            imageVector = CategoryIcons.getIcon(icon),
+            contentDescription = null,
+            tint = color,
+            modifier = Modifier.size((size * 0.5).dp),
+        )
     }
 }
 
@@ -80,7 +86,7 @@ fun ExpenseCard(
             horizontalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             CategoryIconBadge(
-                icon = expense.category?.icon ?: "📦",
+                icon = expense.category?.icon ?: "inventory",
                 colorHex = expense.category?.colorHex ?: "#C7C7C7",
             )
             Column(modifier = Modifier.weight(1f)) {

@@ -31,16 +31,16 @@ class CategoryRepositoryImpl
 
             val defaults =
                 listOf(
-                    CategoryEntity(name = "Food & Drinks", icon = "🍔", colorHex = "#FF6B6B", isDefault = true),
-                    CategoryEntity(name = "Transport", icon = "🚗", colorHex = "#4ECDC4", isDefault = true),
-                    CategoryEntity(name = "Shopping", icon = "🛍️", colorHex = "#45B7D1", isDefault = true),
-                    CategoryEntity(name = "Health", icon = "💊", colorHex = "#96CEB4", isDefault = true),
-                    CategoryEntity(name = "Entertainment", icon = "🎬", colorHex = "#FFEAA7", isDefault = true),
-                    CategoryEntity(name = "Housing", icon = "🏠", colorHex = "#DDA0DD", isDefault = true),
-                    CategoryEntity(name = "Education", icon = "📚", colorHex = "#98D8C8", isDefault = true),
-                    CategoryEntity(name = "Salary", icon = "💰", colorHex = "#A8E6CF", isDefault = true),
-                    CategoryEntity(name = "Utilities", icon = "💡", colorHex = "#FFD93D", isDefault = true),
-                    CategoryEntity(name = "Other", icon = "📦", colorHex = "#C7C7C7", isDefault = true),
+                    CategoryEntity(name = "Food & Drinks", icon = "restaurant", colorHex = "#FF6B6B", isDefault = true),
+                    CategoryEntity(name = "Transport", icon = "directions_car", colorHex = "#4ECDC4", isDefault = true),
+                    CategoryEntity(name = "Shopping", icon = "shopping_bag", colorHex = "#45B7D1", isDefault = true),
+                    CategoryEntity(name = "Health", icon = "medical_services", colorHex = "#96CEB4", isDefault = true),
+                    CategoryEntity(name = "Entertainment", icon = "movie", colorHex = "#FFEAA7", isDefault = true),
+                    CategoryEntity(name = "Housing", icon = "home", colorHex = "#DDA0DD", isDefault = true),
+                    CategoryEntity(name = "Education", icon = "book", colorHex = "#98D8C8", isDefault = true),
+                    CategoryEntity(name = "Salary", icon = "payments", colorHex = "#A8E6CF", isDefault = true),
+                    CategoryEntity(name = "Utilities", icon = "lightbulb", colorHex = "#FFD93D", isDefault = true),
+                    CategoryEntity(name = "Other", icon = "inventory", colorHex = "#C7C7C7", isDefault = true),
                 )
             categoryDao.insertAll(defaults)
         }
