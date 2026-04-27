@@ -4,7 +4,9 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
@@ -27,6 +29,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.expense.tracker.ui.components.SummaryCard
 import java.time.YearMonth
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -87,6 +90,26 @@ fun HomeScreen(
             }
             summary?.let { monthlySummary ->
                 item {
+                    BalanceCard(summary = monthlySummary)
+                }
+                item {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(12.dp),
+                    ) {
+                        SummaryCard(
+                            label = "Income",
+                            amount = monthlySummary.totalIncome,
+                            isIncome = true,
+                            modifier = Modifier.weight(1f),
+                        )
+                        SummaryCard(
+                            label = "Expenses",
+                            amount = monthlySummary.totalExpenses,
+                            isIncome = false,
+                            modifier = Modifier.weight(1f),
+                        )
+                    }
                 }
             }
         }
