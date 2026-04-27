@@ -28,11 +28,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.expense.tracker.features.expense.presentation.AddEditExpenseScreen
+import com.expense.tracker.features.expense.presentation.ExpenseDetailScreen
 import com.expense.tracker.features.home.HomeScreen
 
 data class BottomNavItem(
@@ -136,6 +139,15 @@ fun VolakoNavGraph() {
             composable(VolakoDestinations.SETTINGS) { Text("Settings") }
             composable(VolakoDestinations.ADD_EXPENSE) {
                 AddEditExpenseScreen(onNavigateBack = { navController.popBackStack() })
+            }
+            composable(
+                route = VolakoDestinations.EXPENSE_DETAIL,
+                arguments = listOf(navArgument(VolakoDestinations.ARG_EXPENSE_ID) { type = NavType.LongType }),
+            ) {
+                ExpenseDetailScreen(
+                    onNavigateBack = { navController.popBackStack() },
+                    onNavigateToEdit = { id -> navController.navigate(VolakoDestinations.editExpense(id)) },
+                )
             }
         }
     }
