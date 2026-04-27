@@ -35,23 +35,24 @@ data class BottomNavItem(
     val unselectedIcon: ImageVector,
 )
 
-private val bottomNavItems = listOf(
-    BottomNavItem(VolakoDestinations.HOME, "Home", Icons.Filled.Home, Icons.Outlined.Home),
-    BottomNavItem(
-        VolakoDestinations.ALL_EXPENSES,
-        "Expenses",
-        Icons.AutoMirrored.Filled.List,
-        Icons.AutoMirrored.Outlined.List,
-    ),
-    BottomNavItem(
-        VolakoDestinations.BUDGET,
-        "Budget",
-        Icons.Filled.AccountBalanceWallet,
-        Icons.Outlined.AccountBalanceWallet,
-    ),
-    BottomNavItem(VolakoDestinations.CATEGORIES, "Categories", Icons.Filled.Category, Icons.Outlined.Category),
-    BottomNavItem(VolakoDestinations.SETTINGS, "Settings", Icons.Filled.Settings, Icons.Outlined.Settings),
-)
+private val bottomNavItems =
+    listOf(
+        BottomNavItem(VolakoDestinations.HOME, "Home", Icons.Filled.Home, Icons.Outlined.Home),
+        BottomNavItem(
+            VolakoDestinations.ALL_EXPENSES,
+            "Expenses",
+            Icons.AutoMirrored.Filled.List,
+            Icons.AutoMirrored.Outlined.List,
+        ),
+        BottomNavItem(
+            VolakoDestinations.BUDGET,
+            "Budget",
+            Icons.Filled.AccountBalanceWallet,
+            Icons.Outlined.AccountBalanceWallet,
+        ),
+        BottomNavItem(VolakoDestinations.CATEGORIES, "Categories", Icons.Filled.Category, Icons.Outlined.Category),
+        BottomNavItem(VolakoDestinations.SETTINGS, "Settings", Icons.Filled.Settings, Icons.Outlined.Settings),
+    )
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -60,11 +61,13 @@ fun VolakoNavGraph() {
     val navBackStackSentry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackSentry?.destination?.route
 
-    val hideBottomBar = currentRoute in listOf(
-        VolakoDestinations.ADD_EXPENSE,
-        VolakoDestinations.EDIT_EXPENSE,
-        VolakoDestinations.EXPENSE_DETAIL,
-    )
+    val hideBottomBar =
+        currentRoute in
+            listOf(
+                VolakoDestinations.ADD_EXPENSE,
+                VolakoDestinations.EDIT_EXPENSE,
+                VolakoDestinations.EXPENSE_DETAIL,
+            )
 
     Scaffold(
         bottomBar = {
@@ -98,7 +101,7 @@ fun VolakoNavGraph() {
             composable(VolakoDestinations.HOME) {
                 HomeScreen(
                     onNavigateToAddExpense = { navController.navigate(VolakoDestinations.ADD_EXPENSE) },
-                    onNavigateToExpenseDetail = { id -> navController.navigate(VolakoDestinations.expenseDetail(id)) }
+                    onNavigateToExpenseDetail = { id -> navController.navigate(VolakoDestinations.expenseDetail(id)) },
                 )
             }
             composable(VolakoDestinations.ALL_EXPENSES) { Text("Expenses") }

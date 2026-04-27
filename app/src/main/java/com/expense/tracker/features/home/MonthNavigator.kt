@@ -23,12 +23,14 @@ import java.time.YearMonth
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun MonthNavigator(
-    currentMonth: YearMonth, onPreviousMonth: () -> Unit, onNextMonth: () -> Unit
+    currentMonth: YearMonth,
+    onPreviousMonth: () -> Unit,
+    onNextMonth: () -> Unit,
 ) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         IconButton(onClick = onPreviousMonth) {
             Icon(Icons.Default.ChevronLeft, contentDescription = "Previous month")
@@ -37,11 +39,12 @@ fun MonthNavigator(
             Text(
                 text = month.toDisplayString(),
                 style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.SemiBold
+                fontWeight = FontWeight.SemiBold,
             )
         }
         IconButton(
-            onClick = onNextMonth, enabled = currentMonth < YearMonth.now()
+            onClick = onNextMonth,
+            enabled = currentMonth < YearMonth.now(),
         ) {
             Icon(Icons.Default.ChevronRight, contentDescription = "Next month")
         }

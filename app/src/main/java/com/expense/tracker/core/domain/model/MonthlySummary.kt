@@ -6,5 +6,5 @@ data class MonthlySummary(
     val totalExpenses: Double,
     val totalIncome: Double,
     val balance: Double = totalIncome - totalExpenses,
-    val expensesByCategory: Map<Category, Double> = emptyMap()
+    val expensesByCategory: Map<Category, Double> = emptyMap(),
 )

@@ -10,5 +10,5 @@ data class Expense(
     val category: Category? = null,
     val date: LocalDate,
     val type: TransactionType,
-    val createdAt: Long = System.currentTimeMillis()
+    val createdAt: Long = System.currentTimeMillis(),
 )

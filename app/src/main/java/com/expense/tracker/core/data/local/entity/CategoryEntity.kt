@@ -11,5 +11,5 @@ data class CategoryEntity(
     @ColumnInfo(name = "icon") val icon: String,
     @ColumnInfo(name = "color_hex") val colorHex: String,
     @ColumnInfo(name = "is_default") val isDefault: Boolean = false,
-    @ColumnInfo(name = "created_at") val createdAt: Long = System.currentTimeMillis()
+    @ColumnInfo(name = "created_at") val createdAt: Long = System.currentTimeMillis(),
 )

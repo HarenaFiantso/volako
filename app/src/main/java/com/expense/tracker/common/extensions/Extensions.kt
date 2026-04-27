@@ -7,5 +7,4 @@ import java.time.format.DateTimeFormatter
 import java.util.Locale
 
 @RequiresApi(Build.VERSION_CODES.O)
-fun YearMonth.toDisplayString(): String =
-    format(DateTimeFormatter.ofPattern("MMMM yyyy", Locale.getDefault()))
+fun YearMonth.toDisplayString(): String = format(DateTimeFormatter.ofPattern("MMMM yyyy", Locale.getDefault()))

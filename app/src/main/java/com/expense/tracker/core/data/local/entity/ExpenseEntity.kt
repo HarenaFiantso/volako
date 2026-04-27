@@ -7,9 +7,16 @@ import androidx.room.Index
 import androidx.room.PrimaryKey
 
 @Entity(
-    tableName = "expenses", foreignKeys = [ForeignKey(
-        entity = CategoryEntity::class, parentColumns = ["id"], childColumns = ["category_id"], onDelete = 3
-    )], indices = [Index(value = ["category_id"])]
+    tableName = "expenses",
+    foreignKeys = [
+        ForeignKey(
+            entity = CategoryEntity::class,
+            parentColumns = ["id"],
+            childColumns = ["category_id"],
+            onDelete = 3,
+        ),
+    ],
+    indices = [Index(value = ["category_id"])],
 )
 data class ExpenseEntity(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
@@ -20,5 +27,5 @@ data class ExpenseEntity(
     @ColumnInfo(name = "date") val date: Long,
     @ColumnInfo(name = "type") val type: TransactionType,
     @ColumnInfo(name = "created_at") val createdAt: Long = System.currentTimeMillis(),
-    @ColumnInfo(name = "updated_at") val updatedAt: Long = System.currentTimeMillis()
+    @ColumnInfo(name = "updated_at") val updatedAt: Long = System.currentTimeMillis(),
 )

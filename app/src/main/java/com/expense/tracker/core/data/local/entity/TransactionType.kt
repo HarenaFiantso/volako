@@ -1,5 +1,6 @@
-package com.expense.tracker.core.data.local.entity;
+package com.expense.tracker.core.data.local.entity
 
-public enum TransactionType {
-    EXPENSE, INCOME
+enum class TransactionType {
+    EXPENSE,
+    INCOME,
 }

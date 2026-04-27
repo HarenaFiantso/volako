@@ -36,7 +36,7 @@ fun HomeScreen(
     onNavigateToAddExpense: () -> Unit,
     onNavigateToExpenseDetail: (Long) -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: HomeViewModel = hiltViewModel<HomeViewModel>()
+    viewModel: HomeViewModel = hiltViewModel<HomeViewModel>(),
 ) {
     val summary by viewModel.monthlySummary.collectAsStateWithLifecycle()
 
@@ -44,29 +44,37 @@ fun HomeScreen(
 
     Scaffold(
         topBar = {
-        TopAppBar(
-            title = {
-                Text(
-                    text = "Volako", style = MaterialTheme.typography.headlineMedium, fontWeight = FontWeight.Bold
-                )
-            }, colors = TopAppBarDefaults.topAppBarColors(
-                containerColor = MaterialTheme.colorScheme.background
+            TopAppBar(
+                title = {
+                    Text(
+                        text = "Volako",
+                        style = MaterialTheme.typography.headlineMedium,
+                        fontWeight = FontWeight.Bold,
+                    )
+                },
+                colors =
+                    TopAppBarDefaults.topAppBarColors(
+                        containerColor = MaterialTheme.colorScheme.background,
+                    ),
             )
-        )
-    }, floatingActionButton = {
-        FloatingActionButton(
-            onClick = onNavigateToAddExpense, containerColor = MaterialTheme.colorScheme.primary
-        ) {
-            Icon(Icons.Default.Add, contentDescription = "Add Expense")
-        }
-    }, modifier = modifier
+        },
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = onNavigateToAddExpense,
+                containerColor = MaterialTheme.colorScheme.primary,
+            ) {
+                Icon(Icons.Default.Add, contentDescription = "Add Expense")
+            }
+        },
+        modifier = modifier,
     ) { paddingValues ->
         LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues),
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues),
             contentPadding = PaddingValues(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+            verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             item {
                 MonthNavigator(currentMonth = currentMonth, onPreviousMonth = {
@@ -79,10 +87,8 @@ fun HomeScreen(
             }
             summary?.let { monthlySummary ->
                 item {
-
                 }
             }
         }
-
     }
 }
