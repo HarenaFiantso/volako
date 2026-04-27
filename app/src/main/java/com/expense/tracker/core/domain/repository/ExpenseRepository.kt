@@ -1,5 +1,6 @@
 package com.expense.tracker.core.domain.repository
 
+import com.expense.tracker.core.data.local.entity.TransactionType
 import com.expense.tracker.core.domain.model.Expense
 import kotlinx.coroutines.flow.Flow
 

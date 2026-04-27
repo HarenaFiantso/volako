@@ -4,6 +4,7 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import com.expense.tracker.core.data.local.entity.TransactionType
 import com.expense.tracker.core.domain.model.MonthlySummary
+import com.expense.tracker.core.domain.repository.CategoryRepository
 import com.expense.tracker.core.domain.repository.ExpenseRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
@@ -27,15 +28,9 @@ class GetMonthlySummaryUseCase
             val categoriesFlow = categoryRepository.observeAll()
 
             return combine(expensesFlow, categoriesFlow) { expenses, _ ->
-                val totalExpenses =
-                    expenses
-                        .filter { it.type == TransactionType.EXPENSE }
-                        .sumOf { it.amount }
+                val totalExpenses = expenses.filter { it.type == TransactionType.EXPENSE }.sumOf { it.amount }
 
-                val totalIncome =
-                    expenses
-                        .filter { it.type == TransactionType.INCOME }
-                        .sumOf { it.amount }
+                val totalIncome = expenses.filter { it.type == TransactionType.INCOME }.sumOf { it.amount }
 
                 val expensesByCategory =
                     expenses

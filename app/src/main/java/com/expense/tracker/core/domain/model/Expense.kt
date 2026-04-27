@@ -1,5 +1,6 @@
 package com.expense.tracker.core.domain.model
 
+import com.expense.tracker.core.data.local.entity.TransactionType
 import java.time.LocalDate
 
 data class Expense(
