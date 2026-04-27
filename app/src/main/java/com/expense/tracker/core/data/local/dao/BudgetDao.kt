@@ -10,7 +10,6 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface BudgetDao {
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(budget: BudgetEntity): Long
 
@@ -25,19 +24,24 @@ interface BudgetDao {
         SELECT * FROM budgets 
         WHERE month = :month AND year = :year 
         ORDER BY category_id ASC
-    """
+    """,
     )
-    fun observeByMonthAndYear(month: Int, year: Int): Flow<List<BudgetEntity>>
+    fun observeByMonthAndYear(
+        month: Int,
+        year: Int,
+    ): Flow<List<BudgetEntity>>
 
     @Query(
         """
         SELECT * FROM budgets 
         WHERE category_id = :categoryId AND month = :month AND year = :year
         LIMIT 1
-    """
+    """,
     )
     suspend fun getByCategoryAndPeriod(
-        categoryId: Long?, month: Int, year: Int
+        categoryId: Long?,
+        month: Int,
+        year: Int,
     ): BudgetEntity?
 
     @Query(
@@ -45,7 +49,10 @@ interface BudgetDao {
         SELECT * FROM budgets 
         WHERE category_id IS NULL AND month = :month AND year = :year
         LIMIT 1
-    """
+    """,
     )
-    fun observeGlobalBudget(month: Int, year: Int): Flow<BudgetEntity?>
+    fun observeGlobalBudget(
+        month: Int,
+        year: Int,
+    ): Flow<BudgetEntity?>
 }

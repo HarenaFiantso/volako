@@ -4,7 +4,6 @@ import androidx.room.TypeConverter
 import com.expense.tracker.core.data.local.entity.TransactionType
 
 object VolakoTypeConverters {
-
     @TypeConverter
     fun fromTransactionType(type: TransactionType): String = type.name
 

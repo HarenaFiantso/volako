@@ -2,5 +2,7 @@ package com.expense.tracker.core.data.local.entity
 
 enum class TransactionType {
     EXPENSE,
-    INCOME,
+    INCOME, ;
+
+    fun toEntity(): TransactionType = TransactionType.valueOf(name)
 }

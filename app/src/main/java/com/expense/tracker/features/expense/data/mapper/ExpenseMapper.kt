@@ -1,31 +1,13 @@
-package com.expense.tracker.core.data.repository
+package com.expense.tracker.features.expense.data.mapper
 
 import android.os.Build
 import androidx.annotation.RequiresApi
-import com.expense.tracker.core.data.local.entity.CategoryEntity
 import com.expense.tracker.core.data.local.entity.ExpenseEntity
+import com.expense.tracker.core.data.local.entity.TransactionType
 import com.expense.tracker.core.domain.model.Category
 import com.expense.tracker.core.domain.model.Expense
 import java.time.Instant
 import java.time.ZoneId
-
-fun CategoryEntity.toDomain(): Category =
-    Category(
-        id = id,
-        name = name,
-        icon = icon,
-        colorHex = colorHex,
-        isDefault = isDefault,
-    )
-
-fun Category.toEntity(): CategoryEntity =
-    CategoryEntity(
-        id = id,
-        name = name,
-        icon = icon,
-        colorHex = colorHex,
-        isDefault = isDefault,
-    )
 
 @RequiresApi(Build.VERSION_CODES.O)
 fun ExpenseEntity.toDomain(category: Category? = null): Expense =
@@ -36,7 +18,7 @@ fun ExpenseEntity.toDomain(category: Category? = null): Expense =
         note = note,
         category = category,
         date = Instant.ofEpochMilli(date).atZone(ZoneId.systemDefault()).toLocalDate(),
-        type = type,
+        type = TransactionType.valueOf(type.name),
         createdAt = createdAt,
     )
 
@@ -49,6 +31,7 @@ fun Expense.toEntity(): ExpenseEntity =
         note = note,
         categoryId = category?.id,
         date = date.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli(),
-        type = type,
+        type = TransactionType.valueOf(type.name),
         createdAt = createdAt,
+        updatedAt = System.currentTimeMillis(),
     )
