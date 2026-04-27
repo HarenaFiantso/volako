@@ -32,6 +32,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.expense.tracker.features.expense.presentation.AddEditExpenseScreen
 import com.expense.tracker.features.home.HomeScreen
 
 data class BottomNavItem(
@@ -133,6 +134,9 @@ fun VolakoNavGraph() {
             composable(VolakoDestinations.BUDGET) { Text("Budget") }
             composable(VolakoDestinations.CATEGORIES) { Text("Categories") }
             composable(VolakoDestinations.SETTINGS) { Text("Settings") }
+            composable(VolakoDestinations.ADD_EXPENSE) {
+                AddEditExpenseScreen(onNavigateBack = { navController.popBackStack() })
+            }
         }
     }
 }
