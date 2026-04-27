@@ -1,4 +1,4 @@
-package com.expense.tracker.ui.theme
+package com.expense.tracker.common.theme
 
 import android.app.Activity
 import android.os.Build
