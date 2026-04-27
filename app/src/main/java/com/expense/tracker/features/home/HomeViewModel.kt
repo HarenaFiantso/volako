@@ -39,7 +39,13 @@ class HomeViewModel
             getMonthlySummaryUseCase(YearMonth.now()).stateIn(
                 scope = viewModelScope,
                 started = SharingStarted.WhileSubscribed(5_000),
-                initialValue = null,
+                initialValue =
+                    MonthlySummary(
+                        month = YearMonth.now().monthValue,
+                        year = YearMonth.now().year,
+                        totalExpenses = 0.0,
+                        totalIncome = 0.0,
+                    ),
             )
 
         @RequiresApi(Build.VERSION_CODES.O)

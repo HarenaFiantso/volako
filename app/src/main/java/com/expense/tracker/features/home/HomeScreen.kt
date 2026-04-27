@@ -5,18 +5,13 @@ import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -32,6 +27,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.expense.tracker.core.domain.model.MonthlySummary
 import com.expense.tracker.ui.components.ExpenseCard
 import com.expense.tracker.ui.components.SectionHeader
 import com.expense.tracker.ui.components.SummaryCard
@@ -41,15 +37,21 @@ import java.time.YearMonth
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
-    onNavigateToAddExpense: () -> Unit,
     onNavigateToExpenseDetail: (Long) -> Unit,
-    modifier: Modifier = Modifier,
     viewModel: HomeViewModel = hiltViewModel<HomeViewModel>(),
 ) {
     val summary by viewModel.monthlySummary.collectAsStateWithLifecycle()
     val expenses by viewModel.recentExpenses.collectAsStateWithLifecycle()
 
     var currentMonth by remember { mutableStateOf(YearMonth.now()) }
+
+    val effectiveSummary =
+        summary ?: MonthlySummary(
+            month = currentMonth.monthValue,
+            year = currentMonth.year,
+            totalExpenses = 0.0,
+            totalIncome = 0.0,
+        )
 
     Scaffold(
         topBar = {
@@ -67,75 +69,78 @@ fun HomeScreen(
                     ),
             )
         },
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = onNavigateToAddExpense,
-                containerColor = MaterialTheme.colorScheme.primary,
-            ) {
-                Icon(Icons.Default.Add, contentDescription = "Add Expense")
-            }
-        },
-        modifier = modifier,
     ) { paddingValues ->
         LazyColumn(
             modifier =
                 Modifier
                     .fillMaxSize()
-                    .padding(paddingValues),
-            contentPadding = PaddingValues(16.dp),
+                    .padding(paddingValues)
+                    .navigationBarsPadding(),
+            contentPadding =
+                PaddingValues(
+                    start = 16.dp,
+                    end = 16.dp,
+                    top = 16.dp,
+                    bottom = 88.dp,
+                ),
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             item {
-                MonthNavigator(currentMonth = currentMonth, onPreviousMonth = {
-                    currentMonth = currentMonth.minusMonths(1)
-                    viewModel.onEvent(HomeEvent.SelectMonth(currentMonth))
-                }, onNextMonth = {
-                    currentMonth = currentMonth.plusMonths(1)
-                    viewModel.onEvent(HomeEvent.SelectMonth(currentMonth))
-                })
+                MonthNavigator(
+                    currentMonth = currentMonth,
+                    onPreviousMonth = {
+                        currentMonth = currentMonth.minusMonths(1)
+                        viewModel.onEvent(HomeEvent.SelectMonth(currentMonth))
+                    },
+                    onNextMonth = {
+                        currentMonth = currentMonth.plusMonths(1)
+                        viewModel.onEvent(HomeEvent.SelectMonth(currentMonth))
+                    },
+                )
             }
-            summary?.let { monthlySummary ->
+
+            item {
+                BalanceCard(summary = effectiveSummary)
+            }
+
+            item {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(12.dp),
+                ) {
+                    SummaryCard(
+                        label = "Income",
+                        amount = effectiveSummary.totalIncome,
+                        isIncome = true,
+                        modifier = Modifier.weight(1f),
+                    )
+                    SummaryCard(
+                        label = "Expenses",
+                        amount = effectiveSummary.totalExpenses,
+                        isIncome = false,
+                        modifier = Modifier.weight(1f),
+                    )
+                }
+            }
+
+            item {
+                SectionHeader(title = "Recent Transactions")
+            }
+
+            if (expenses.isEmpty()) {
                 item {
-                    BalanceCard(summary = monthlySummary)
+                    EmptyState()
                 }
-                item {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.spacedBy(12.dp),
-                    ) {
-                        SummaryCard(
-                            label = "Income",
-                            amount = monthlySummary.totalIncome,
-                            isIncome = true,
-                            modifier = Modifier.weight(1f),
-                        )
-                        SummaryCard(
-                            label = "Expenses",
-                            amount = monthlySummary.totalExpenses,
-                            isIncome = false,
-                            modifier = Modifier.weight(1f),
-                        )
-                    }
+            } else {
+                items(
+                    items = expenses,
+                    key = { it.id },
+                ) { expense ->
+                    ExpenseCard(
+                        expense = expense,
+                        onClick = { onNavigateToExpenseDetail(expense.id) },
+                    )
                 }
-                item {
-                    SectionHeader(title = "Recent Transactions")
-                }
-                if (expenses.isEmpty()) {
-                    item {
-                        EmptyState()
-                    }
-                } else {
-                    items(
-                        items = expenses,
-                        key = { it.id },
-                    ) { expense ->
-                        ExpenseCard(
-                            expense = expense,
-                            onClick = { onNavigateToExpenseDetail(expense.id) },
-                        )
-                    }
-                }
-                item { Spacer(modifier = Modifier.height(80.dp)) }
             }
         }
     }
