@@ -24,6 +24,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.expense.tracker.features.home.HomeScreen
 
 data class BottomNavItem(
     val route: String,
@@ -91,7 +92,12 @@ fun VolakoNavGraph() {
             navController = navController,
             startDestination = VolakoDestinations.HOME,
         ) {
-            composable(VolakoDestinations.HOME) { Text("Home") }
+            composable(VolakoDestinations.HOME) {
+                HomeScreen(
+                    onNavigateToAddExpense = { navController.navigate(VolakoDestinations.ADD_EXPENSE) },
+                    onNavigateToExpenseDetail = { id -> navController.navigate(VolakoDestinations.expenseDetail(id)) }
+                )
+            }
             composable(VolakoDestinations.ALL_EXPENSES) { Text("Expenses") }
             composable(VolakoDestinations.BUDGET) { Text("Budget") }
             composable(VolakoDestinations.CATEGORIES) { Text("Categories") }
