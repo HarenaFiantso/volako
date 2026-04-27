@@ -25,7 +25,8 @@
 
 **Volako** is a personal expense tracker application built for **Android** using **Kotlin** and **Jetpack Compose**.
 
-The goal of this project is to practice building a **modern Android application** with a clean, scalable architecture while keeping the implementation simple and focused on learning.
+The goal of this project is to practice building a **modern Android application** with a clean, scalable architecture
+while keeping the implementation simple and focused on learning.
 
 ---
 

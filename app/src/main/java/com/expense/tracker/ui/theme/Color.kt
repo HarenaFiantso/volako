@@ -8,7 +8,6 @@ val VolakoGreenLight = Color(0xFF55EFC4)
 
 val VolakoPurple = Color(0xFF6C5CE7)
 val VolakoRed = Color(0xFFE17055)
-val VolakoAmber = Color(0xFFFDCB6E)
 
 val VolakoDarkSurface = Color(0xFF0D1117)
 val VolakoDarkCard = Color(0xFF161B22)

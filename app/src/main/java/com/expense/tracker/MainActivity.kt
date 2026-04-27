@@ -21,7 +21,7 @@ class MainActivity : ComponentActivity() {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Greeting(
                         name = "Volako",
-                        modifier = Modifier.padding(innerPadding)
+                        modifier = Modifier.padding(innerPadding),
                     )
                 }
             }
@@ -30,9 +30,12 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
+fun Greeting(
+    name: String,
+    modifier: Modifier = Modifier,
+) {
     Text(
         text = "Hello $name! This is my first kotlin project",
-        modifier = modifier
+        modifier = modifier,
     )
 }
