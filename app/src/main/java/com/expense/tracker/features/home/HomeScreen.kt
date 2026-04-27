@@ -26,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import java.time.YearMonth
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -37,6 +38,8 @@ fun HomeScreen(
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = hiltViewModel<HomeViewModel>()
 ) {
+    val summary by viewModel.monthlySummary.collectAsStateWithLifecycle()
+
     var currentMonth by remember { mutableStateOf(YearMonth.now()) }
 
     Scaffold(
@@ -73,6 +76,11 @@ fun HomeScreen(
                     currentMonth = currentMonth.plusMonths(1)
                     viewModel.onEvent(HomeEvent.SelectMonth(currentMonth))
                 })
+            }
+            summary?.let { monthlySummary ->
+                item {
+
+                }
             }
         }
 

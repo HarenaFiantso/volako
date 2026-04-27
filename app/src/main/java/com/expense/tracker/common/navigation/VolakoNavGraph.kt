@@ -1,5 +1,7 @@
 package com.expense.tracker.common.navigation
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.automirrored.outlined.List
@@ -51,6 +53,7 @@ private val bottomNavItems = listOf(
     BottomNavItem(VolakoDestinations.SETTINGS, "Settings", Icons.Filled.Settings, Icons.Outlined.Settings),
 )
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun VolakoNavGraph() {
     val navController = rememberNavController()
