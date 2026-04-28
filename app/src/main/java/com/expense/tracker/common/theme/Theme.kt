@@ -1,81 +1,61 @@
 package com.expense.tracker.common.theme
 
 import android.app.Activity
-import android.os.Build
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
-import androidx.compose.material3.dynamicDarkColorScheme
-import androidx.compose.material3.dynamicLightColorScheme
-import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
-val DarkColorScheme =
+private val MochaColorScheme =
     darkColorScheme(
-        primary = VolakoGreen,
-        onPrimary = Color.Black,
-        primaryContainer = VolakoGreenDark,
-        onPrimaryContainer = Color.White,
-        secondary = VolakoPurple,
-        onSecondary = Color.White,
-        error = VolakoRed,
-        background = VolakoDarkSurface,
-        onBackground = VolakoTextPrimaryDark,
-        surface = VolakoDarkCard,
-        onSurface = VolakoTextPrimaryDark,
-        surfaceVariant = VolakoDarkElevated,
-        onSurfaceVariant = VolakoTextSecondaryDark,
-    )
-
-val LightColorScheme =
-    lightColorScheme(
-        primary = VolakoGreen,
-        onPrimary = Color.White,
-        primaryContainer = VolakoGreenLight,
-        onPrimaryContainer = Color(0xFF003828),
-        secondary = VolakoPurple,
-        onSecondary = Color.White,
-        error = VolakoRed,
-        background = VolakoLightBackground,
-        onBackground = VolakoTextPrimaryLight,
-        surface = VolakoLightSurface,
-        onSurface = VolakoTextPrimaryLight,
-        surfaceVariant = VolakoLightSurfaceVariant,
-        onSurfaceVariant = VolakoTextSecondaryLight,
+        primary = MochaMauve,
+        onPrimary = MochaBase,
+        primaryContainer = MochaSurface0,
+        onPrimaryContainer = MochaLavender,
+        secondary = MochaBlue,
+        onSecondary = MochaBase,
+        secondaryContainer = MochaSurface1,
+        onSecondaryContainer = MochaSapphire,
+        tertiary = MochaPink,
+        onTertiary = MochaBase,
+        tertiaryContainer = MochaSurface0,
+        onTertiaryContainer = MochaFlamingo,
+        error = MochaRed,
+        onError = MochaBase,
+        errorContainer = MochaMaroon,
+        onErrorContainer = MochaRosewater,
+        background = MochaBase,
+        onBackground = MochaText,
+        surface = MochaSurface0,
+        onSurface = MochaText,
+        surfaceVariant = MochaSurface1,
+        onSurfaceVariant = MochaSubtext1,
+        outline = MochaOverlay1,
+        outlineVariant = MochaSurface2,
+        inverseSurface = MochaText,
+        inverseOnSurface = MochaBase,
+        inversePrimary = MochaMauve,
+        scrim = MochaCrust,
     )
 
 @Composable
-fun VolakoTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
-    dynamicColor: Boolean = true,
-    content: @Composable () -> Unit,
-) {
-    val colorScheme =
-        when {
-            dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-                val context = LocalContext.current
-                if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-            }
-
-            darkTheme -> DarkColorScheme
-            else -> LightColorScheme
-        }
-
+fun VolakoTheme(content: @Composable () -> Unit) {
     val view = LocalView.current
+
     if (!view.isInEditMode) {
         SideEffect {
             val window = (view.context as Activity).window
-            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !darkTheme
+            window.statusBarColor = MochaBase.toArgb()
+            window.navigationBarColor = MochaBase.toArgb()
+            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = false
         }
     }
 
     MaterialTheme(
-        colorScheme = colorScheme,
+        colorScheme = MochaColorScheme,
         typography = Typography,
         content = content,
     )
