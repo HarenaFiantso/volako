@@ -51,6 +51,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.expense.tracker.features.expense.presentation.AddEditExpenseScreen
 import com.expense.tracker.features.expense.presentation.ExpenseDetailScreen
+import com.expense.tracker.features.expense.presentation.ExpenseListScreen
 import com.expense.tracker.features.home.HomeScreen
 
 data class BottomNavItem(
@@ -141,7 +142,11 @@ fun VolakoNavGraph() {
                     },
                 )
             }
-            composable(VolakoDestinations.ALL_EXPENSES) { Text("Expenses") }
+            composable(VolakoDestinations.ALL_EXPENSES) {
+                ExpenseListScreen(
+                    onNavigateToDetail = { id -> navController.navigate(VolakoDestinations.expenseDetail(id)) },
+                )
+            }
             composable(VolakoDestinations.BUDGET) { Text("Budget") }
             composable(VolakoDestinations.CATEGORIES) { Text("Categories") }
             composable(VolakoDestinations.SETTINGS) { Text("Settings") }

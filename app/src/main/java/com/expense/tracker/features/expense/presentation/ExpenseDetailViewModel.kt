@@ -9,7 +9,6 @@ import com.expense.tracker.core.domain.usecase.DeleteExpenseUseCase
 import com.expense.tracker.core.domain.usecase.GetExpenseByIdUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -28,7 +27,6 @@ class ExpenseDetailViewModel
     ) : ViewModel() {
         private val expenseId: Long = checkNotNull(savedStateHandle[VolakoDestinations.ARG_EXPENSE_ID])
 
-        private val _uiState = MutableStateFlow(ExpenseDetailUiState())
         val uiState: StateFlow<ExpenseDetailUiState> =
             getExpenseByIdUseCase(expenseId)
                 .map { expense -> ExpenseDetailUiState(expense = expense) }
